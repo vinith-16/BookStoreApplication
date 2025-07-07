@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,14 +50,6 @@
             padding: 20px;
             border-radius: 10px;
         }
-        .hero a {
-            font-size: 30px;
-            background-color: blue;
-            color:white;
-            padding: 10px;
-            border-radius: 10px;
-            text-decoration:none;
-        }
 
         .features {
             display: flex;
@@ -99,7 +92,6 @@
 
     <div class="hero">
         <h2>Welcome to the World of Books</h2>
-        <a href="/index">Add Books</a>
     </div>
 
     <div class="features">
