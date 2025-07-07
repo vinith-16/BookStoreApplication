@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.BookApplication.model.UserPathModel;
 import com.example.BookApplication.model.PathModel;
+import com.example.BookApplication.model.UserPathModel;
 import com.example.BookApplication.repository.BookRepository;
-
 import com.example.BookApplication.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,10 +36,7 @@ public class BookController {
         return "home";
     }
     
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";
-    }
+ 
 
     @PostMapping("/submitLogin")
     public String submitLogin(UserPathModel login) {
@@ -66,19 +63,33 @@ public class BookController {
     }
 
  // Login Form Submission
+    @GetMapping("/login")
+    public String showLoginform(Model model) {
+    	model.addAttribute("user",new UserPathModel());
+    	return "login";
+    }
+    
     @PostMapping("/login")
-   public String loginSubmit(HttpServletRequest request) {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        if ("Yoga".equals(username) && "Yoga@123".equals(password)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            return "redirect:/home";
-        } else {
-            request.setAttribute("error", "Invalid username or password");
-            return "login";
-        }
+    public String login(@ModelAttribute("user") UserPathModel user, Model model) {
+    	UserPathModel existingUser = rep.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+    	if(existingUser != null) {
+    		return "redirect:/view";
+    	}
+    	else {
+    		model.addAttribute("error","Invalid email or password");
+    		return "login";
+    	}
+    }
+    
+    @GetMapping("/signup")
+    public String showSignupForm(Model model) {
+    	model.addAttribute("user",new UserPathModel());
+    	return "signup";
+    }
+    @PostMapping("/signup")
+    public String signup(@ModelAttribute("user") UserPathModel user) {
+    	rep.save(user);
+    	return "redirect:/login";
     }
     
     @GetMapping("/index")
