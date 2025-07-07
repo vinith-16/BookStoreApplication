@@ -5,7 +5,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: pink;
             padding: 40px;
         }
 
@@ -14,7 +13,7 @@
                         padding: 25px;
             border-radius: 8px;
             width: 400px;
-            margin: 0 auto;
+            margin: 100 auto;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
@@ -37,9 +36,10 @@
         }
 
         input[type="submit"] {
-            background-color: red;
+            background-color: blue;
             color: white;
             cursor: pointer;
+            font-size:15px;
         }
 
         input[type="submit"]:hover {
@@ -49,6 +49,13 @@
         .error {
             color: red;
             text-align: center;
+        }
+        .one{
+        margin-left:90px;
+        }
+        .two{
+        text-decoration:none;
+        color:blue;
         }
     </style>
 </head>
@@ -63,6 +70,7 @@
         <input type="password" name="password" required/><br/><br/>
 
         <input type="submit" value="login"/>
+        <p class="one">Don't have an account<a class ="two" href="/signup">  Sign Up</a></p>
 
         <c:if test="${not empty error}">
             <div class="error">${error}</div>
