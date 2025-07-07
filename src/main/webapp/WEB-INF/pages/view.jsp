@@ -61,11 +61,20 @@
         
         background-color:blue;
         color:white;
+        
         }
+        .add a {
+            font-size: 30px;
+            background-color: blue;
+            color:white;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration:none;
     </style>
 </head>
 <body>
     <h1>Book List</h1>
+    <a class="add" href="/index">Add Books</a>
 
     <table>
         <tr>
