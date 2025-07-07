@@ -9,5 +9,7 @@ import com.example.BookApplication.model.UserPathModel;
 @Repository
 public interface UserRepository extends JpaRepository<UserPathModel,Long> {
 
+	UserPathModel findByUsernameAndPassword(String username, String password);
+
 	
 }
