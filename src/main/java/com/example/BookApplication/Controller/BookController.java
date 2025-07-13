@@ -33,75 +33,63 @@ public class BookController {
 
     @GetMapping("/home")
     public String homepage() {
-        return "home";
+        return "pages/home";
     }
     
- 
-
-    @PostMapping("/submitLogin")
-    public String submitLogin(UserPathModel login) {
-        rep.save(login);
-        return "addBook";
-    }
-
-    @GetMapping("/addBook")
-    public String addBook() {
-        return "addBook";
-    }
 
     @PostMapping("/submit")
     public String submit(PathModel book) {
         repo.save(book);
-        return "index";
+        return "pages/index";
     }
 
     @GetMapping("/view")
     public String viewBooks(HttpServletRequest request) {
         List<PathModel> books = repo.findAll();
         request.setAttribute("books", books);
-        return "view";
+        return "pages/view";
     }
 
  // Login Form Submission
     @GetMapping("/login")
     public String showLoginform(Model model) {
     	model.addAttribute("user",new UserPathModel());
-    	return "login";
+    	return "pages/login";
     }
     
     @PostMapping("/login")
     public String login(@ModelAttribute("user") UserPathModel user, Model model) {
     	UserPathModel existingUser = rep.findByUsernameAndPassword(user.getUsername(), user.getPassword());
     	if(existingUser != null) {
-    		return "redirect:/view";
+    		return "redirect:pages/view";
     	}
     	else {
     		model.addAttribute("error","Invalid email or password");
-    		return "login";
+    		return "pages/login";
     	}
     }
     
     @GetMapping("/signup")
     public String showSignupForm(Model model) {
     	model.addAttribute("user",new UserPathModel());
-    	return "signup";
+    	return "pages/signup";
     }
     @PostMapping("/signup")
     public String signup(@ModelAttribute("user") UserPathModel user) {
     	rep.save(user);
-    	return "redirect:/login";
+    	return "redirect:pages/login";
     }
     
     @GetMapping("/index")
     public String index() {
-        return "index"; // assumes home.html is in src/main/resources/templates/
-    }
+        return "pages/index"; // assumes home.html is in src/main/resources/templates/
+   }
 
     // Logout
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/login";
+        return "redirect:pages/home";
     }
     
     
@@ -109,20 +97,20 @@ public class BookController {
     @GetMapping("/students/{bookNo}")
     public String deleteStudent(@PathVariable("bookNo") Long bookNo) {
         repo.deleteById(bookNo);
-        return "redirect:/view";
+        return "redirect:pages/view";
     }
     
     @GetMapping("/edit/{bookNo}")
     public String showEditForm(@PathVariable("bookNo") Long bookNo, HttpServletRequest request) {
         PathModel book = repo.findById(bookNo).orElse(null);
         request.setAttribute("book", book);
-        return "editBook";  // JSP file name: editBook.jsp
+        return "pages/editBook";  // JSP file name: editBook.jsp
     }
 
     @PostMapping("/update")
     public String updateBook(@ModelAttribute PathModel book) {
         repo.save(book);  // save() will update if bookNo already exists
-        return "redirect:/view";
+        return "redirect:pages/view";
     }
 
 
